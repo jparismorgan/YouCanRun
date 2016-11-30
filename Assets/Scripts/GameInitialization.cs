@@ -9,6 +9,8 @@ public class GameInitialization : MonoBehaviour {
 		InitializePlayer ();
 		SpawnZombies ();
 
+		GameObject Countdown = GameObject.Find ("Countdown");
+		Countdown.SetActive (false);
 	}
 	
 	// Update is called once per frame
