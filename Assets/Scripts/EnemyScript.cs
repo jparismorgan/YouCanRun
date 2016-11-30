@@ -37,15 +37,15 @@ public class EnemyScript : MonoBehaviour {
 
 	Vector3 GetLineOfSight(){
 		////////////////////////////////
-		//Checks what is in the zombies line of sight using a raycaster
-		//Uses the players location to determine if anything is in the way of the player and enemy
+		//Checks what is in the zombie's line of sight using a raycaster
+		//Uses the player's location to determine if anything is in the way of the player and enemy
 		//Return Value: location of player if in line of sight, none if not
 		////////////////////////////////
 
 		//player_class.player_position is the player positon, as set in Player.cs
 		//transform.position is the position of the object this script is assigned to
 		Vector3 ray_direction = playerScript.player_position - transform.position;
-		//hols information about the ray
+		//holds information about the ray
 		RaycastHit hit;
 		//max distance the ray will travel
 		max_sight_distance = 1000f;
