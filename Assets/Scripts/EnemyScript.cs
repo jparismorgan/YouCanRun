@@ -23,7 +23,7 @@ public class EnemyScript : MonoBehaviour {
 
 		//find player
 		Vector3 playerLocation = SearchForPlayer ();
-		print (playerLocation);
+		//print (playerLocation);
 
 		if (playerLocation == Vector3.zero) {	
 			RandomEnemyMovement ();
@@ -57,9 +57,13 @@ public class EnemyScript : MonoBehaviour {
 	float rx = 0;
 	float ry = 0;
 	float rz = 0;
+
 	Vector3 lastDirection;
-	int past_direction = -1; //-1 for left, 1 for right (refers to the direction that the enenmy will randomly move towards)
-	int past_direction_count = 0;
+
+	int leftRightEnemyDecision = -1; //-1 for left, 1 for right (refers to the direction that the enenmy will randomly move towards)
+	int currentDirectionCount = 0;
+	int maxDirectionCount = 60;
+
 	void RandomEnemyMovement(){
 		//found the player and then lost them - choose a new random direction
 		if (foundPlayer == true || rx == 0 || ry == 0 || rz == 0){
@@ -70,18 +74,22 @@ public class EnemyScript : MonoBehaviour {
 		}
 
 		//flip directions of random movement
-		if (past_direction_count > 100) {
-			past_direction = past_direction * -1;
+		if (currentDirectionCount > maxDirectionCount) {
+			leftRightEnemyDecision = leftRightEnemyDecision * -1;
+			currentDirectionCount = 0;
+			maxDirectionCount = Random.Range(40,100);
 		}
 			
 		//still have not found player - increment the past direction we were going
-		rx = rx + past_direction * Random.Range(1, 10);
+		rx = rx + leftRightEnemyDecision * Random.Range(10, 40);
 		ry = this.transform.position.y; 
-		rz = rz + Random.Range(1, 10);
+		rz = rz + Random.Range(0, 1);
 
+		currentDirectionCount += 1;
+	
 
-		Vector3 randomPosition = new Vector3(rx, ry, rz) ;
-		MoveToLookAtLocation (randomPosition);
+		lastDirection = new Vector3(rx, ry, rz) ;
+		MoveToLookAtLocation (lastDirection);
 	}
 
 	Vector3 SearchForPlayer(){
