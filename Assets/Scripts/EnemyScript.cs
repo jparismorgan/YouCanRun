@@ -7,7 +7,7 @@ public class EnemyScript : MonoBehaviour {
 	PlayerScript playerScript;
 	public float walkSpeed = 5.0f;
 	//how far the enemy can look for the player
-	public float maxSightDistance;
+	public float maxSightDistance = 100.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -15,8 +15,9 @@ public class EnemyScript : MonoBehaviour {
 		playerScript = Player.GetComponent<PlayerScript>();
 	}
 
+	// used to keep track of whether the enemy has seen the player since the last movement call
+	bool foundPlayer = false;
 
-	float lerpMoving=0.0f;
 	// Update is called once per frame
 	void Update () {
 
@@ -26,45 +27,61 @@ public class EnemyScript : MonoBehaviour {
 
 		if (playerLocation == Vector3.zero) {	
 			RandomEnemyMovement ();
+			foundPlayer = false;
 		} else { 
-			SeekPlayerAtLocation (playerLocation);
+			MoveToLookAtLocation (playerLocation);
+			foundPlayer = true;
 		}
 			
-		//debug to see front direction of enemy
-		Vector3 fwd = transform.TransformDirection (Vector3.forward);
-		Debug.DrawLine(transform.position, transform.position+fwd*30.0f, Color.red);
 
 		//SeekPlayerAtLocation (location);
 	}
 
-	void SeekPlayerAtLocation(Vector3 location){
+	float lerpMoving=0.0f;
+	void MoveToLookAtLocation(Vector3 location){
 		////////////////////////////////
 		//Input: Location
-		//Function: Move the object to the location, or walk around randomly of null location passed
-		//
+		//Function: Move the object to the location
 		////////////////////////////////
-		float elapsedTime=0.0f;
 
-			if (playerLocation == Vector3.zero) {
-				//no movement}
-			} else {
-				lerpMoving = 0;
-				lerpMoving += Time.deltaTime; 
-				transform.position = Vector3.MoveTowards(transform.position, playerLocation, walkSpeed * lerpMoving);
-				//
-				//			elapsedTime += Time.deltaTime;
-				//			float percentComplete = elapsedTime / 3.0f; //go from 0.0 to 1.0
-				//			float clampedValue=Mathf.Clamp (percentComplete, 0.0f, 1.0f);
-				//			transform.position = Vector3.Lerp (transform.position, playerLocation, clampedValue);
-			}
+		//rotate to look at the player
+		transform.LookAt(location);
+
+		//movement
+		lerpMoving = 0;
+		lerpMoving += Time.deltaTime; 
+		transform.position = Vector3.MoveTowards(transform.position, location, walkSpeed * lerpMoving);
+	}
 
 
-//		elapsedTime += Time.deltaTime;
-//		float percentComplete = elapsedTime / 3.0f; //go from 0.0 to 1.0
-//		float clampedValue=Mathf.Clamp (percentComplete, 0.0f, 1.0f);
-//		transform.position = Vector3.Lerp (startPos, endPos, clampedValue);
+	float rx = 0;
+	float ry = 0;
+	float rz = 0;
+	Vector3 lastDirection;
+	int past_direction = -1; //-1 for left, 1 for right (refers to the direction that the enenmy will randomly move towards)
+	int past_direction_count = 0;
+	void RandomEnemyMovement(){
+		//found the player and then lost them - choose a new random direction
+		if (foundPlayer == true || rx == 0 || ry == 0 || rz == 0){
+			rx = transform.position.x;
+			ry = transform.position.y; 
+			rz = transform.position.z;
+			lastDirection = new Vector3 (rx, ry, rz);
+		}
 
-		return;
+		//flip directions of random movement
+		if (past_direction_count > 100) {
+			past_direction = past_direction * -1;
+		}
+			
+		//still have not found player - increment the past direction we were going
+		rx = rx + past_direction * Random.Range(1, 10);
+		ry = this.transform.position.y; 
+		rz = rz + Random.Range(1, 10);
+
+
+		Vector3 randomPosition = new Vector3(rx, ry, rz) ;
+		MoveToLookAtLocation (randomPosition);
 	}
 
 	Vector3 SearchForPlayer(){
@@ -77,6 +94,11 @@ public class EnemyScript : MonoBehaviour {
 		//player_class.player_position is the player positon, as set in PlayerScript.cs
 		//transform.position is the position of the object this script is assigned to
 		Vector3 ray_direction = playerScript.player_position - transform.position;
+
+		//debug to see front direction of enemy
+		Debug.DrawLine(transform.position, transform.position+ray_direction * maxSightDistance , Color.red);
+
+
 		//holds information about the ray
 		RaycastHit hit;
 		//max distance the ray will travel
@@ -88,6 +110,7 @@ public class EnemyScript : MonoBehaviour {
 				//enemy can see the player
 				if (hit.transform.position.z > -0.2f) {
 					//the player is in front of the enemy
+
 					return hit.point;
 				}
 			}
