@@ -17,4 +17,12 @@ public class PlayerScript : MonoBehaviour {
 
 
 	}
+
+
+	void OnCollisionEnter(Collision collision) {
+		print (collision.gameObject.name);
+		if (collision.gameObject.name == "Enemy") {
+			//death scene
+		}
+	}
 }

@@ -26,7 +26,7 @@ public class EnemyScript : MonoBehaviour {
 		//print (playerLocation);
 
 		if (playerLocation == Vector3.zero) {	
-			RandomEnemyMovement ();
+			//RandomEnemyMovement ();
 			foundPlayer = false;
 		} else { 
 			MoveToLookAtLocation (playerLocation);
@@ -104,7 +104,7 @@ public class EnemyScript : MonoBehaviour {
 		Vector3 ray_direction = playerScript.player_position - transform.position;
 
 		//debug to see front direction of enemy
-		Debug.DrawLine(transform.position, transform.position+ray_direction * maxSightDistance , Color.red);
+		Debug.DrawLine(transform.position, transform.position + ray_direction * maxSightDistance , Color.red);
 
 
 		//holds information about the ray
@@ -113,6 +113,7 @@ public class EnemyScript : MonoBehaviour {
 		maxSightDistance = 1000f;
 
 		if (Physics.Raycast (transform.position, ray_direction, out hit, maxSightDistance)) {
+			//print (hit.collider);
 		//successull raycast will put information into hit
 			if (hit.transform == Player.transform) {
 				//enemy can see the player
