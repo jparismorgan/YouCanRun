@@ -11,10 +11,13 @@ public class MainMenuStart : MonoBehaviour {
 	public Text settingsMess;
 	public Text playerHeightLabel;
 	public Slider playerHeightSlider;
+	public GameObject playerHeightOBJ;
 	public Text playerSpeedLabel;
 	public Slider playerSpeedSlider;
+	public GameObject playerSpeedOBJ;
 	public Text difficultyLabel;
 	public Dropdown difficulty;
+	public GameObject difficultyOBJ;
 	public Text settingsReturnMess;
 	public Text instructionMess;
 
@@ -36,36 +39,9 @@ public class MainMenuStart : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// Get Components and GameObjects for enabling/ disabling
-		Transform StartMess = transform.Find ("StartMess");
-		startMess = StartMess.GetComponent<Text> ();
-
-		Transform CountDown = transform.Find("CountDown");
-		countDown = CountDown.GetComponent<Text> (); 
-
-		Transform Paused = transform.Find("Paused");
-		pauSed = Paused.GetComponent<Text> (); 
-		Transform PausedReturnMess = transform.Find("PauseReturnMess");
-		pausedReturnMess = PausedReturnMess.GetComponent<Text> (); 
-
-		Transform SettingsMess = transform.Find("SettingsMess");
-		settingsMess = SettingsMess.GetComponent<Text> (); 
-		Transform PlayerHeightLabel = transform.Find("PlayerHeightMess");
-		playerHeightLabel = PlayerHeightLabel.GetComponent<Text> (); 
-		playerHeightSlider = GameObject.Find("PlayerHeightSlider").GetComponent<Slider> ();
-		Transform PlayerSpeedLabel = transform.Find("PlayerSpeedMess");
-		playerSpeedLabel = PlayerSpeedLabel.GetComponent<Text> (); 
-		playerSpeedSlider = GameObject.Find("PlayerSpeedSlider").GetComponent<Slider> ();
-		Transform DifficultyLabel = transform.Find("DifficultyMess");
-		difficultyLabel = DifficultyLabel.GetComponent<Text> (); 
-		difficulty = GameObject.Find("Difficulty").GetComponent<Dropdown> ();
-		Transform SettingsReturnMess = transform.Find("SettingsReturnMess");
-		settingsReturnMess = SettingsReturnMess.GetComponent<Text> (); 
-
-		Transform InstructionMess = transform.Find("InstructionMess");
-		instructionMess = InstructionMess.GetComponent<Text> (); 
-
-
+		playerHeightOBJ = GameObject.Find ("PlayerHeightSlider");
+		playerSpeedOBJ = GameObject.Find ("PlayerSpeedSlider"); 
+		difficultyOBJ = GameObject.Find ("Difficulty"); 
 
 		startMess.enabled = false;
 		countDown.enabled = false;
@@ -74,10 +50,13 @@ public class MainMenuStart : MonoBehaviour {
 		settingsMess.enabled = false;
 		playerHeightLabel.enabled = false;
 		playerHeightSlider.enabled = false;
+		playerHeightOBJ.SetActive(false);
 		playerSpeedLabel.enabled = false;
 		playerSpeedSlider.enabled = false; 
+		playerSpeedOBJ.SetActive(false);
 		difficultyLabel.enabled = false;
 		difficulty.enabled = false;
+		difficultyOBJ.SetActive(false);
 		settingsReturnMess.enabled = false;
 		instructionMess.enabled = false;
 
@@ -108,10 +87,13 @@ public class MainMenuStart : MonoBehaviour {
 			settingsMess.enabled = false;
 			playerHeightLabel.enabled = false;
 			playerHeightSlider.enabled = false;
+			playerHeightOBJ.SetActive(false);
 			playerSpeedLabel.enabled = false;
 			playerSpeedSlider.enabled = false; 
+			playerSpeedOBJ.SetActive(false);
 			difficultyLabel.enabled = false;
 			difficulty.enabled = false;
+			difficultyOBJ.SetActive(false);
 			settingsReturnMess.enabled = false;
 			instructionMess.enabled = false;
 
@@ -158,10 +140,13 @@ public class MainMenuStart : MonoBehaviour {
 			settingsMess.enabled = false;
 			playerHeightLabel.enabled = false;
 			playerHeightSlider.enabled = false;
+			playerHeightOBJ.SetActive(false);
 			playerSpeedLabel.enabled = false;
-			playerSpeedSlider.enabled = false; 
+			playerSpeedSlider.enabled = false;
+			playerSpeedOBJ.SetActive(false);
 			difficultyLabel.enabled = false;
 			difficulty.enabled = false;
+			difficultyOBJ.SetActive(false);
 			settingsReturnMess.enabled = false;
 			instructionMess.enabled = true;
 		}
@@ -184,10 +169,13 @@ public class MainMenuStart : MonoBehaviour {
 			settingsMess.enabled = true;
 			playerHeightLabel.enabled = true;
 			playerHeightSlider.enabled = true;
+			playerHeightOBJ.SetActive(true);
 			playerSpeedLabel.enabled = true;
-			playerSpeedSlider.enabled = true; 
+			playerSpeedSlider.enabled = true;
+			playerSpeedOBJ.SetActive(true);
 			difficultyLabel.enabled = true;
 			difficulty.enabled = true;
+			difficultyOBJ.SetActive(true);
 			settingsReturnMess.enabled = true;
 			instructionMess.enabled = false;
 
@@ -205,16 +193,16 @@ public class MainMenuStart : MonoBehaviour {
 		}
 			
 				// Height Setting
-				if(settingsScreen && Input.GetKeyDown ("a")) {
+				if(settingsScreen && Input.GetKeyDown ("q")) {
 					playerHeightSlider.value--;
 				}
 
-				if (settingsScreen && Input.GetKeyDown ("d")) {
+				if (settingsScreen && Input.GetKeyDown ("r")) {
 					playerHeightSlider.value++;
 				}
 
 				// Difficulty Setting
-				if(settingsScreen && Input.GetKeyDown ("w")) {
+				if(settingsScreen && Input.GetKeyDown ("f")) {
 					difficulty.value = 0;
 				}
 
@@ -245,10 +233,13 @@ public class MainMenuStart : MonoBehaviour {
 			settingsMess.enabled = false;
 			playerHeightLabel.enabled = false;
 			playerHeightSlider.enabled = false;
+			playerHeightOBJ.SetActive(false);
 			playerSpeedLabel.enabled = false;
-			playerSpeedSlider.enabled = false; 
+			playerSpeedSlider.enabled = false;
+			playerSpeedOBJ.SetActive(false);
 			difficultyLabel.enabled = false;
 			difficulty.enabled = false;
+			difficultyOBJ.SetActive(false);
 			settingsReturnMess.enabled = false;
 			instructionMess.enabled = false;
 
@@ -270,10 +261,13 @@ public class MainMenuStart : MonoBehaviour {
 			settingsMess.enabled = false;
 			playerHeightLabel.enabled = false;
 			playerHeightSlider.enabled = false;
+			playerHeightOBJ.SetActive(false);
 			playerSpeedLabel.enabled = false;
-			playerSpeedSlider.enabled = false; 
+			playerSpeedSlider.enabled = false;
+			playerSpeedOBJ.SetActive(false);
 			difficultyLabel.enabled = false;
 			difficulty.enabled = false;
+			difficultyOBJ.SetActive(false);
 			settingsReturnMess.enabled = false;
 			instructionMess.enabled = false;
 		}
@@ -296,17 +290,19 @@ public class MainMenuStart : MonoBehaviour {
 			settingsMess.enabled = false;
 			playerHeightLabel.enabled = false;
 			playerHeightSlider.enabled = false;
+			playerHeightOBJ.SetActive(false);
 			playerSpeedLabel.enabled = false;
-			playerSpeedSlider.enabled = false; 
+			playerSpeedSlider.enabled = false;
+			playerSpeedOBJ.SetActive(false);
 			difficultyLabel.enabled = false;
 			difficulty.enabled = false;
+			difficultyOBJ.SetActive(false);
 			settingsReturnMess.enabled = false;
 			instructionMess.enabled = false;
 		}
 
-		if (!paused) {
+		if ((gameplayScreen && !paused) || (titleScreen && !paused)) {
 			Time.timeScale = 1;
-			gameplayScreen = true;
 		}
 
 		if (paused && Input.GetKeyDown ("escape")) {
@@ -328,6 +324,7 @@ public class MainMenuStart : MonoBehaviour {
 	void ClearGame() {
 		// Clear enemies
 		spawned = false;
+		paused = false;
 
 		titleScreen = true;
 		instructionScreen = false;
