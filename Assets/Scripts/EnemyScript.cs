@@ -9,6 +9,11 @@ public class EnemyScript : MonoBehaviour {
 	//how far the enemy can look for the player
 	public float maxSightDistance = 100.0f;
 
+	// Set in Settings Menu
+	public int playerSpeed;
+	public int playerHeight;
+	public string difficultySetting;
+
 	// Use this for initialization
 	void Start () {
 		Player = GameObject.Find("Player");
