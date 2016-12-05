@@ -22,8 +22,8 @@ public class MainMenuStart : MonoBehaviour {
 	public Text instructionMess;
 
 	// Set in Settings Menu
-	public int playerSpeed; // From 0 to 6;
-	public int playerHeight; // From 0 to 6;
+	public int playerSpeed; // From 3 to 20, 6 default
+	public int playerHeight; // From 1 to 6, 2 default
 	public int difficultySetting; // 0: Easy, 1: Normal, 2: Insane
 
 	public bool titleScreen;
@@ -36,6 +36,16 @@ public class MainMenuStart : MonoBehaviour {
 
 	public int secondsLeft;
 	public int timePressed;
+
+	//Terrain info
+	public Terrain terrain;
+	private int terrainWidth; // terrain size (x)
+	private int terrainLength; // terrain size (z)
+	private int terrainPosX; // terrain position x
+	private int terrainPosZ; // terrain position z
+
+	// Enemy
+	public GameObject enemyToSpawn;
 
 	// Use this for initialization
 	void Start () {
@@ -71,9 +81,19 @@ public class MainMenuStart : MonoBehaviour {
 		secondsLeft = 10;
 
 		// Initial Settings Menu Values
-		playerSpeed = 3;
-		playerHeight = 3;
+		playerSpeed = 6;
+		playerHeight = 2;
 		difficultySetting = 1;
+
+		// Get terrain settings
+		// terrain size x
+		terrainWidth = (int)terrain.terrainData.size.x;
+		// terrain size z
+		terrainLength = (int)terrain.terrainData.size.z;
+		// terrain x position
+		terrainPosX = (int)terrain.transform.position.x;
+		// terrain z position
+		terrainPosZ = (int)terrain.transform.position.z;
 	}
 	
 	// Update is called once per frame
@@ -310,17 +330,44 @@ public class MainMenuStart : MonoBehaviour {
 		}
 	}
 
+
+
 	void SpawnEnemies () {
 		// Spawn Enemies
-		spawned = true;
 
+		//settings related to menu screens
+		spawned = true;
 		titleScreen = false;
 		instructionScreen = false;
 		settingsScreen = false;
 		countdownScreen = false;
 		gameplayScreen = true;
-	}
 
+		int currentSpawnCount = 0;
+		int spawnCount;
+
+		if (difficultySetting == 0) {
+			spawnCount = 5;
+		} else if (difficultySetting == 1) {
+			spawnCount = 10;
+		} else {
+			spawnCount = 15;
+		}	
+
+
+		while (currentSpawnCount < spawnCount) {
+			// generate random x position
+			int posx = Random.Range(terrainPosX, terrainPosX + terrainWidth);
+			// generate random z position
+			int posz = Random.Range(terrainPosZ, terrainPosZ + terrainLength);
+			// get the terrain height at the random position
+			float posy = Terrain.activeTerrain.SampleHeight(new Vector3(posx, 0, posz));
+			// create new gameObject on random position
+			GameObject newObject = (GameObject)Instantiate(enemyToSpawn, new Vector3(posx, posy, posz), Quaternion.identity);
+			currentSpawnCount += 1;
+		}
+	}
+		
 	void ClearGame() {
 		// Clear enemies
 		spawned = false;
@@ -332,4 +379,10 @@ public class MainMenuStart : MonoBehaviour {
 		countdownScreen = false;
 		gameplayScreen = false;
 	}
+
+	public void DeathScreen(){
+
+	}
+
+
 }

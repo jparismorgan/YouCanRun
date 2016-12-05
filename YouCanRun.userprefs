@@ -1,6 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MainMenuStart.cs">
+    <Files>
+      <File FileName="Assets/Scripts/MainMenuStart.cs" Line="70" Column="38" />
+      <File FileName="Assets/Scripts/PlayerScript.cs" Line="46" Column="5" />
+      <File FileName="Assets/Scripts/StepThroughPortal.cs" Line="22" Column="37" />
+      <File FileName="Assets/Scripts/EnemyScript.cs" Line="8" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

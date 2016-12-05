@@ -2,33 +2,40 @@
 using System.Collections;
 
 public class EnemyScript : MonoBehaviour {
-	//holds the player that we GetComponent() of in Start()
+	//holds the player
 	GameObject Player;
 	PlayerScript playerScript;
-	public float walkSpeed = 5.0f;
-	//how far the enemy can look for the player
+
+	//enemy walk speed
+	public float enemyWalkSpeed = 5.0f;
+
+	//distance the enemy can look
 	public float maxSightDistance = 100.0f;
 
-	// Set in Settings Menu
-	public int playerSpeed;
-	public int playerHeight;
-	public string difficultySetting;
+	//main menu script
+	private GameObject mainMenu;
+	private MainMenuStart mainMenuScript;
 
 	// Use this for initialization
 	void Start () {
+		//grab player
 		Player = GameObject.Find("Player");
 		playerScript = Player.GetComponent<PlayerScript>();
+
+		//grab main menu script
+		mainMenu = GameObject.Find ("MainMenu");
+		mainMenuScript = mainMenu.GetComponent<MainMenuStart> ();
 	}
 
 	// used to keep track of whether the enemy has seen the player since the last movement call
 	bool foundPlayer = false;
-
 	// Update is called once per frame
 	void Update () {
 
 		//find player
 		Vector3 playerLocation = SearchForPlayer ();
-		//print (playerLocation);
+
+		//print (playerLocation.ToString());
 
 		if (playerLocation == Vector3.zero) {	
 			//RandomEnemyMovement ();
@@ -44,18 +51,13 @@ public class EnemyScript : MonoBehaviour {
 
 	float lerpMoving=0.0f;
 	void MoveToLookAtLocation(Vector3 location){
-		////////////////////////////////
-		//Input: Location
-		//Function: Move the object to the location
-		////////////////////////////////
-
 		//rotate to look at the player
 		transform.LookAt(location);
 
 		//movement
 		lerpMoving = 0;
 		lerpMoving += Time.deltaTime; 
-		transform.position = Vector3.MoveTowards(transform.position, location, walkSpeed * lerpMoving);
+		transform.position = Vector3.MoveTowards(transform.position, location, enemyWalkSpeed * lerpMoving);
 	}
 
 
@@ -98,19 +100,16 @@ public class EnemyScript : MonoBehaviour {
 	}
 
 	Vector3 SearchForPlayer(){
-		////////////////////////////////
-		//Checks what is in the zombie's line of sight using a raycaster
-		//Uses the player's location to determine if anything is in the way of the player and enemy
-		//Return Value: location of player if in line of sight and in front of the enemy, none if not
-		////////////////////////////////
+		// Checks what is in the zombie's line of sight using a raycaster
+		// Uses the player's location to determine if anything is in the way of the player and enemy
+		// Return Value: location of player if in line of sight and in front of the enemy, none if not
 
-		//player_class.player_position is the player positon, as set in PlayerScript.cs
+
 		//transform.position is the position of the object this script is assigned to
 		Vector3 ray_direction = playerScript.player_position - transform.position;
 
 		//debug to see front direction of enemy
 		Debug.DrawLine(transform.position, transform.position + ray_direction * maxSightDistance , Color.red);
-
 
 		//holds information about the ray
 		RaycastHit hit;
@@ -118,20 +117,34 @@ public class EnemyScript : MonoBehaviour {
 		maxSightDistance = 1000f;
 
 		if (Physics.Raycast (transform.position, ray_direction, out hit, maxSightDistance)) {
+
 			//print (hit.collider);
-		//successull raycast will put information into hit
+			//successull raycast will put information into hit
 			if (hit.transform == Player.transform) {
+
 				//enemy can see the player
-				if (hit.transform.position.z > -0.2f) {
+				//if (hit.transform.position.z > -0.2f) {
 					//the player is in front of the enemy
 
 					return hit.point;
-				}
+				//}
 			}
 		}
 		//enemy cannot see player
 		return Vector3.zero;
 
+	}
+
+
+	void updatePlayerStats (){
+		//set enemy height
+		if (mainMenuScript.difficultySetting == 0) {
+			enemyWalkSpeed = 4f;
+		} else if (mainMenuScript.difficultySetting == 1) {
+			enemyWalkSpeed = 5f;
+		} else {
+			enemyWalkSpeed = 5f;
+		}	
 	}
 
 }

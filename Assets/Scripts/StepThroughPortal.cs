@@ -17,7 +17,9 @@ public class StepThroughPortal : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
+		print (other);
 		if (other.tag == "Player") {
+			print (other.transform.position);
 			other.transform.position = otherPortal.transform.position + otherPortal.transform.forward * 2;
 		}
 	}

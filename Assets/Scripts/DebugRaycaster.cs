@@ -25,6 +25,6 @@ public class DebugRaycaster : MonoBehaviour {
 
 
 		Physics.Raycast (transform.position, ray_direction, out hit, maxSightDistance);
-		print (hit.collider);
+		//print (hit.collider);
 	}
 }
