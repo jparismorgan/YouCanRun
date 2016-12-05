@@ -346,7 +346,7 @@ public class MainMenuStart : MonoBehaviour {
 		// DEATH CASE
 		if (isDead) {
 			Time.timeScale = 0;
-			deathTime.text = (Time.time).ToString;
+			deathTime.text = (Time.time).ToString();
 
 			startMess.enabled = false;
 			countDown.enabled = false;
@@ -368,7 +368,7 @@ public class MainMenuStart : MonoBehaviour {
 			deathTime.enabled = true;
 		}
 
-		if (isDead && Input.GetKeyDown ("esc")) {
+		if (isDead && Input.GetKeyDown (KeyCode.Escape)) {
 			ClearGame ();
 		}
 	}
