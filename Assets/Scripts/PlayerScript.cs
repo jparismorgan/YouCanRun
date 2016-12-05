@@ -5,6 +5,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class PlayerScript : MonoBehaviour {
 	public int health;
 	public Vector3 player_position;
+	public AudioSource Scream;
+	public AudioClip clip;
 
 	private GameObject mainMenu;
 	private MainMenuStart mainMenuScript;
@@ -16,6 +18,8 @@ public class PlayerScript : MonoBehaviour {
 		//grab main menu script
 		mainMenu = GameObject.Find ("MainMenu");
 		mainMenuScript = mainMenu.GetComponent<MainMenuStart> ();
+		Scream = GameObject.Find ("Scream").GetComponent<AudioSource> ();
+		clip = Scream.GetComponent<AudioClip> ();
 
 		//grab character controller
 		controller = this.GetComponent<CharacterController>();
@@ -45,6 +49,7 @@ public class PlayerScript : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		print (collision);
 		if (collision.gameObject.name == "Enemy") {
+			Scream.PlayOneShot (clip, 1);
 			mainMenuScript.isDead = true;
 		}
 	}

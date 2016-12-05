@@ -22,6 +22,10 @@ public class MainMenuStart : MonoBehaviour {
 	public Text instructionMess;
 	public Text deathMess;
 	public Text deathTime;
+	public AudioSource gameMusic;
+	public AudioSource Scream;
+	public AudioClip clip;
+
 
 	// Set in Settings Menu
 	public int playerSpeed; // From 3 to 20, 6 default
@@ -52,6 +56,10 @@ public class MainMenuStart : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		gameMusic = GameObject.Find ("Music").GetComponent<AudioSource> (); 
+		Scream = GameObject.Find ("Scream").GetComponent<AudioSource> ();
+		clip = Scream.GetComponent<AudioClip> ();
+
 		startMess.enabled = false;
 		countDown.enabled = false;
 		pauSed.enabled = false;
@@ -70,6 +78,7 @@ public class MainMenuStart : MonoBehaviour {
 		instructionMess.enabled = false;
 		deathMess.enabled = false;
 		deathTime.enabled = false;
+		gameMusic.enabled = false;
 
 		// Initialize flow variables
 		titleScreen = true;
@@ -120,6 +129,7 @@ public class MainMenuStart : MonoBehaviour {
 			instructionMess.enabled = false;
 			deathMess.enabled = false;
 			deathTime.enabled = false;
+			gameMusic.enabled = false;
 
 			paused = false;	
 		}
@@ -175,6 +185,7 @@ public class MainMenuStart : MonoBehaviour {
 			instructionMess.enabled = true;
 			deathMess.enabled = false;
 			deathTime.enabled = false;
+			gameMusic.enabled = false;
 		}
 
 		if (instructionScreen && Input.GetKeyDown ("b")) {
@@ -206,6 +217,7 @@ public class MainMenuStart : MonoBehaviour {
 			instructionMess.enabled = false;
 			deathMess.enabled = false;
 			deathTime.enabled = false;
+			gameMusic.enabled = false;
 
 			playerHeight = (int) playerHeightSlider.value;
 			playerSpeed = (int) playerSpeedSlider.value;
@@ -272,6 +284,7 @@ public class MainMenuStart : MonoBehaviour {
 			instructionMess.enabled = false;
 			deathMess.enabled = false;
 			deathTime.enabled = false;
+			gameMusic.enabled = true;
 
 			secondsLeft = 10 - ((int)(Time.time) - timePressed);
 			countDown.text = secondsLeft.ToString ("00");
@@ -302,6 +315,7 @@ public class MainMenuStart : MonoBehaviour {
 			instructionMess.enabled = false;
 			deathMess.enabled = false;
 			deathTime.enabled = false;
+			gameMusic.enabled = true; 
 		}
 
 		if (gameplayScreen && Input.GetKeyDown ("p")) {
@@ -333,6 +347,7 @@ public class MainMenuStart : MonoBehaviour {
 			instructionMess.enabled = false;
 			deathMess.enabled = false;
 			deathTime.enabled = false;
+			gameMusic.enabled = true;
 		}
 
 		if ((gameplayScreen && !paused) || (titleScreen && !paused)) {
@@ -346,6 +361,7 @@ public class MainMenuStart : MonoBehaviour {
 		// DEATH CASE
 		if (isDead) {
 			Time.timeScale = 0;
+			Scream.PlayOneShot (clip);
 			deathTime.text = (Time.time).ToString();
 
 			startMess.enabled = false;
@@ -366,6 +382,7 @@ public class MainMenuStart : MonoBehaviour {
 			instructionMess.enabled = false;
 			deathMess.enabled = true;
 			deathTime.enabled = true;
+			gameMusic.enabled = false;
 		}
 
 		if (isDead && Input.GetKeyDown (KeyCode.Escape)) {
