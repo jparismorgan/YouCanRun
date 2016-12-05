@@ -20,6 +20,8 @@ public class MainMenuStart : MonoBehaviour {
 	public GameObject difficultyOBJ;
 	public Text settingsReturnMess;
 	public Text instructionMess;
+	public Text deathMess;
+	public Text deathTime;
 
 	// Set in Settings Menu
 	public int playerSpeed; // From 3 to 20, 6 default
@@ -33,6 +35,7 @@ public class MainMenuStart : MonoBehaviour {
 	public bool gameplayScreen;
 	public bool spawned;
 	public bool paused;
+	public bool isDead;
 
 	public int secondsLeft;
 	public int timePressed;
@@ -49,10 +52,6 @@ public class MainMenuStart : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		playerHeightOBJ = GameObject.Find ("PlayerHeightSlider");
-		playerSpeedOBJ = GameObject.Find ("PlayerSpeedSlider"); 
-		difficultyOBJ = GameObject.Find ("Difficulty"); 
-
 		startMess.enabled = false;
 		countDown.enabled = false;
 		pauSed.enabled = false;
@@ -69,6 +68,8 @@ public class MainMenuStart : MonoBehaviour {
 		difficultyOBJ.SetActive(false);
 		settingsReturnMess.enabled = false;
 		instructionMess.enabled = false;
+		deathMess.enabled = false;
+		deathTime.enabled = false;
 
 		// Initialize flow variables
 		titleScreen = true;
@@ -78,6 +79,7 @@ public class MainMenuStart : MonoBehaviour {
 		gameplayScreen = false;
 		spawned = false;
 		paused = false;
+		isDead = false;
 		secondsLeft = 10;
 
 		// Initial Settings Menu Values
@@ -116,6 +118,8 @@ public class MainMenuStart : MonoBehaviour {
 			difficultyOBJ.SetActive(false);
 			settingsReturnMess.enabled = false;
 			instructionMess.enabled = false;
+			deathMess.enabled = false;
+			deathTime.enabled = false;
 
 			paused = false;	
 		}
@@ -169,6 +173,8 @@ public class MainMenuStart : MonoBehaviour {
 			difficultyOBJ.SetActive(false);
 			settingsReturnMess.enabled = false;
 			instructionMess.enabled = true;
+			deathMess.enabled = false;
+			deathTime.enabled = false;
 		}
 
 		if (instructionScreen && Input.GetKeyDown ("b")) {
@@ -198,6 +204,8 @@ public class MainMenuStart : MonoBehaviour {
 			difficultyOBJ.SetActive(true);
 			settingsReturnMess.enabled = true;
 			instructionMess.enabled = false;
+			deathMess.enabled = false;
+			deathTime.enabled = false;
 
 			playerHeight = (int) playerHeightSlider.value;
 			playerSpeed = (int) playerSpeedSlider.value;
@@ -262,6 +270,8 @@ public class MainMenuStart : MonoBehaviour {
 			difficultyOBJ.SetActive(false);
 			settingsReturnMess.enabled = false;
 			instructionMess.enabled = false;
+			deathMess.enabled = false;
+			deathTime.enabled = false;
 
 			secondsLeft = 10 - ((int)(Time.time) - timePressed);
 			countDown.text = secondsLeft.ToString ("00");
@@ -290,6 +300,8 @@ public class MainMenuStart : MonoBehaviour {
 			difficultyOBJ.SetActive(false);
 			settingsReturnMess.enabled = false;
 			instructionMess.enabled = false;
+			deathMess.enabled = false;
+			deathTime.enabled = false;
 		}
 
 		if (gameplayScreen && Input.GetKeyDown ("p")) {
@@ -319,6 +331,8 @@ public class MainMenuStart : MonoBehaviour {
 			difficultyOBJ.SetActive(false);
 			settingsReturnMess.enabled = false;
 			instructionMess.enabled = false;
+			deathMess.enabled = false;
+			deathTime.enabled = false;
 		}
 
 		if ((gameplayScreen && !paused) || (titleScreen && !paused)) {
@@ -326,6 +340,35 @@ public class MainMenuStart : MonoBehaviour {
 		}
 
 		if (paused && Input.GetKeyDown ("escape")) {
+			ClearGame ();
+		}
+
+		// DEATH CASE
+		if (isDead) {
+			Time.timeScale = 0;
+			deathTime.text = (Time.time).ToString;
+
+			startMess.enabled = false;
+			countDown.enabled = false;
+			pauSed.enabled = false;
+			pausedReturnMess.enabled = false;
+			settingsMess.enabled = false;
+			playerHeightLabel.enabled = false;
+			playerHeightSlider.enabled = false;
+			playerHeightOBJ.SetActive(false);
+			playerSpeedLabel.enabled = false;
+			playerSpeedSlider.enabled = false; 
+			playerSpeedOBJ.SetActive(false);
+			difficultyLabel.enabled = false;
+			difficulty.enabled = false;
+			difficultyOBJ.SetActive(false);
+			settingsReturnMess.enabled = false;
+			instructionMess.enabled = false;
+			deathMess.enabled = true;
+			deathTime.enabled = true;
+		}
+
+		if (isDead && Input.GetKeyDown ("esc")) {
 			ClearGame ();
 		}
 	}
@@ -379,10 +422,4 @@ public class MainMenuStart : MonoBehaviour {
 		countdownScreen = false;
 		gameplayScreen = false;
 	}
-
-	public void DeathScreen(){
-
-	}
-
-
 }

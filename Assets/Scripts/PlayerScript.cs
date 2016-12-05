@@ -45,7 +45,7 @@ public class PlayerScript : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		//print (collision);
 		if (collision.gameObject.name == "Enemy") {
-			mainMenuScript.DeathScreen ();
+			mainMenuScript.isDead = true;
 		}
 	}
 }
