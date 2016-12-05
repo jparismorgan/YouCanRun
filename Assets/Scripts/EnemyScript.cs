@@ -119,7 +119,7 @@ public class EnemyScript : MonoBehaviour {
 		if (Physics.Raycast (transform.position, ray_direction, out hit, maxSightDistance)) {
 
 			//print (hit.collider);
-			//successull raycast will put information into hit
+			//successfull raycast will put information into hit
 			if (hit.transform == Player.transform) {
 
 				//enemy can see the player
