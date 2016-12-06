@@ -408,11 +408,11 @@ public class MainMenuStart : MonoBehaviour {
 		int spawnCount;
 
 		if (difficultySetting == 0) {
-			spawnCount = 5;
-		} else if (difficultySetting == 1) {
-			spawnCount = 10;
-		} else {
 			spawnCount = 15;
+		} else if (difficultySetting == 1) {
+			spawnCount = 25;
+		} else {
+			spawnCount = 35;
 		}	
 
 
@@ -424,7 +424,7 @@ public class MainMenuStart : MonoBehaviour {
 			// get the terrain height at the random position
 			float posy = Terrain.activeTerrain.SampleHeight(new Vector3(posx, 0, posz));
 			// create new gameObject on random position
-			GameObject newObject = (GameObject)Instantiate(enemyToSpawn, new Vector3(posx, posy, posz), Quaternion.identity);
+			GameObject newObject = (GameObject)Instantiate(enemyToSpawn, new Vector3(posx, posy + 1.5f, posz), Quaternion.identity);
 			currentSpawnCount += 1;
 		}
 	}

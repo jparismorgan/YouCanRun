@@ -46,11 +46,20 @@ public class PlayerScript : MonoBehaviour {
 	}
 
 
-	void OnCollisionEnter(Collision collision) {
-		print (collision.gameObject.tag);
-		if (collision.gameObject.tag == "Enemy") {
+	void OnTriggerEnter(Collider other) {
+		print (other.gameObject.tag);
+		if (other.gameObject.tag == "Enemy") {
+			print ("Enemy Hit");
 			Scream.PlayOneShot (clip, 1);
 			mainMenuScript.isDead = true;
 		}
 	}
+
+//	void OnCollisionEnter(Collision collision) {
+//		print (collision.gameObject.tag);
+//		if (collision.gameObject.tag == "Enemy") {
+//			Scream.PlayOneShot (clip, 1);
+//			mainMenuScript.isDead = true;
+//		}
+//	}
 }
