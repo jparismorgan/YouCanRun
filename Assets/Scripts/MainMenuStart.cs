@@ -106,6 +106,7 @@ public class MainMenuStart : MonoBehaviour {
 		terrainPosX = (int)terrain.transform.position.x;
 		// terrain z position
 		terrainPosZ = (int)terrain.transform.position.z;
+
 	}
 	
 	// Update is called once per frame
@@ -363,7 +364,7 @@ public class MainMenuStart : MonoBehaviour {
 		if (isDead) {
 			Time.timeScale = 0;
 			Scream.PlayOneShot (clip);
-			deathTime.text = (Time.time).ToString();
+			deathTime.text = (Time.time - timePressed).ToString() + " seconds";
 
 			startMess.enabled = false;
 			countDown.enabled = false;
@@ -408,11 +409,11 @@ public class MainMenuStart : MonoBehaviour {
 		int spawnCount;
 
 		if (difficultySetting == 0) {
-			spawnCount = 15;
+			spawnCount = 60;
 		} else if (difficultySetting == 1) {
-			spawnCount = 25;
+			spawnCount = 190;
 		} else {
-			spawnCount = 35;
+			spawnCount = 250;
 		}	
 
 
@@ -427,6 +428,8 @@ public class MainMenuStart : MonoBehaviour {
 			GameObject newObject = (GameObject)Instantiate(enemyToSpawn, new Vector3(posx, posy + 1.5f, posz), Quaternion.identity);
 			currentSpawnCount += 1;
 		}
+
+
 	}
 		
 	void ClearGame() {
@@ -440,6 +443,7 @@ public class MainMenuStart : MonoBehaviour {
 		}
 		currentSpawnCount = 0;
 
+		isDead = false;
 		titleScreen = true;
 		instructionScreen = false;
 		settingsScreen = false;

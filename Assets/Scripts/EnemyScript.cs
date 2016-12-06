@@ -29,6 +29,8 @@ public class EnemyScript : MonoBehaviour {
 
 	// used to keep track of whether the enemy has seen the player since the last movement call
 	bool foundPlayer = false;
+
+	int numberSinceLastStatUpdate = 0;
 	// Update is called once per frame
 	void Update () {
 
@@ -44,8 +46,12 @@ public class EnemyScript : MonoBehaviour {
 			MoveToLookAtLocation (playerLocation);
 			foundPlayer = true;
 		}
-			
-
+		print(numberSinceLastStatUpdate);
+		if (numberSinceLastStatUpdate > 30) {
+			updatePlayerStats ();
+			numberSinceLastStatUpdate = 0;
+		}
+		numberSinceLastStatUpdate += 1;
 		//SeekPlayerAtLocation (location);
 	}
 
@@ -106,8 +112,16 @@ public class EnemyScript : MonoBehaviour {
 		
 		} else {
 			//up { increment y }
+
+
 			rx = this.transform.position.x;
 			ry = ry + Random.Range(5, 10);
+
+			if (ry > 15) {
+				ry = 15;
+			}
+
+
 			rz = this.transform.position.z;
 		}
 			
@@ -117,7 +131,7 @@ public class EnemyScript : MonoBehaviour {
 
 		lastDirection = new Vector3(rx, ry, rz);
 
-		print (lastDirection);
+		//print (lastDirection);
 
 		MoveToLookAtLocation (lastDirection);
 	}
@@ -162,11 +176,11 @@ public class EnemyScript : MonoBehaviour {
 	void updatePlayerStats (){
 		//set enemy height
 		if (mainMenuScript.difficultySetting == 0) {
-			enemyWalkSpeed = 4f;
+			enemyWalkSpeed = 6f;
 		} else if (mainMenuScript.difficultySetting == 1) {
-			enemyWalkSpeed = 5f;
+			enemyWalkSpeed = 8f;
 		} else {
-			enemyWalkSpeed = 7f;
+			enemyWalkSpeed = 10f;
 		}	
 	}
 

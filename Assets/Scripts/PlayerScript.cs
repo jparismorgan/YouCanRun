@@ -19,7 +19,7 @@ public class PlayerScript : MonoBehaviour {
 		mainMenu = GameObject.Find ("MainMenu");
 		mainMenuScript = mainMenu.GetComponent<MainMenuStart> ();
 		Scream = GameObject.Find ("Scream").GetComponent<AudioSource> ();
-		clip = Scream.GetComponent<AudioClip> ();
+		clip = Scream.clip;
 
 		//grab character controller
 		controller = this.GetComponent<CharacterController>();
