@@ -47,7 +47,7 @@ public class PlayerScript : MonoBehaviour {
 
 
 	void OnCollisionEnter(Collision collision) {
-		print (collision);
+		print (collision.gameObject.tag);
 		if (collision.gameObject.tag == "Enemy") {
 			Scream.PlayOneShot (clip, 1);
 			mainMenuScript.isDead = true;
