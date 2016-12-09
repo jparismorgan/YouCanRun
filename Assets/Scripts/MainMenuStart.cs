@@ -6,26 +6,25 @@ public class MainMenuStart : MonoBehaviour {
 
 	public Text startMess;
 	public Text countDown;
-	public Text pauSed;
-	public Text pausedReturnMess;
-	public Text settingsMess;
-	public Text playerHeightLabel;
-	public Slider playerHeightSlider;
-	public GameObject playerHeightOBJ;
+	public Text pauSed; 
+	public Text pausedReturnMess; 
+	public Text settingsMess; 
+	public Text playerHeightLabel; 
+	public Slider playerHeightSlider; 
+	public GameObject playerHeightOBJ; 
 	public Text playerSpeedLabel;
-	public Slider playerSpeedSlider;
-	public GameObject playerSpeedOBJ;
-	public Text difficultyLabel;
-	public Dropdown difficulty;
-	public GameObject difficultyOBJ;
-	public Text settingsReturnMess;
+	public Slider playerSpeedSlider; 
+	public GameObject playerSpeedOBJ; 
+	public Text difficultyLabel; 
+	public Dropdown difficulty; 
+	public GameObject difficultyOBJ; 
+	public Text settingsReturnMess; 
 	public Text instructionMess;
-	public Text deathMess;
-	public Text deathTime;
-	public AudioSource gameMusic;
-	public AudioSource Scream;
+	public Text deathMess; 
+	public Text deathTime; 
+	public AudioSource gameMusic; 
+	public AudioSource Scream; 
 	public AudioClip clip;
-
 
 	// Set in Settings Menu
 	public int playerSpeed; // From 3 to 20, 6 default
@@ -60,26 +59,6 @@ public class MainMenuStart : MonoBehaviour {
 		gameMusic = GameObject.Find ("Music").GetComponent<AudioSource> (); 
 		Scream = GameObject.Find ("Scream").GetComponent<AudioSource> ();
 		clip = Scream.GetComponent<AudioClip> ();
-
-		startMess.enabled = false;
-		countDown.enabled = false;
-		pauSed.enabled = false;
-		pausedReturnMess.enabled = false;
-		settingsMess.enabled = false;
-		playerHeightLabel.enabled = false;
-		playerHeightSlider.enabled = false;
-		playerHeightOBJ.SetActive(false);
-		playerSpeedLabel.enabled = false;
-		playerSpeedSlider.enabled = false; 
-		playerSpeedOBJ.SetActive(false);
-		difficultyLabel.enabled = false;
-		difficulty.enabled = false;
-		difficultyOBJ.SetActive(false);
-		settingsReturnMess.enabled = false;
-		instructionMess.enabled = false;
-		deathMess.enabled = false;
-		deathTime.enabled = false;
-		gameMusic.enabled = false;
 
 		// Initialize flow variables
 		titleScreen = true;
@@ -220,7 +199,6 @@ public class MainMenuStart : MonoBehaviour {
 			deathMess.enabled = false;
 			deathTime.enabled = false;
 			gameMusic.enabled = false;
-
 			playerHeight = (int) playerHeightSlider.value;
 			playerSpeed = (int) playerSpeedSlider.value;
 			difficultySetting = (int) difficulty.value;
@@ -317,7 +295,7 @@ public class MainMenuStart : MonoBehaviour {
 			instructionMess.enabled = false;
 			deathMess.enabled = false;
 			deathTime.enabled = false;
-			gameMusic.enabled = true; 
+			gameMusic.enabled = true;
 		}
 
 		if (gameplayScreen && Input.GetKeyDown ("p")) {
@@ -364,7 +342,12 @@ public class MainMenuStart : MonoBehaviour {
 		if (isDead) {
 			Time.timeScale = 0;
 			Scream.PlayOneShot (clip);
-			deathTime.text = (Time.time - timePressed).ToString() + " seconds";
+			float timeOfDeath = (Time.time - timePressed - 10f);
+			if ((int)timeOfDeath == 1) {
+				deathTime.text = (timeOfDeath).ToString () + " second";
+			} else {
+				deathTime.text = (timeOfDeath).ToString () + " seconds";
+			}
 
 			startMess.enabled = false;
 			countDown.enabled = false;
